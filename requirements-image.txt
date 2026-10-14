@@ -1,0 +1,2 @@
+optimum-intel[openvino,diffusers]==2.2.0
+pillow==12.3.0

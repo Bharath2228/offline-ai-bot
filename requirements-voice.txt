@@ -1,0 +1,4 @@
+faster-whisper==1.2.1
+sounddevice==0.5.3
+numpy==2.3.3
+huggingface-hub==0.36.0
