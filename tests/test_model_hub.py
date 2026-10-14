@@ -1,8 +1,12 @@
 import hashlib
+import sys
 from pathlib import Path
 import tempfile
 from threading import Event
 import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
+
 import httpx
 from model_hub import ModelHub, HubError
 

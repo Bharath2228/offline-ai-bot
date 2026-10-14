@@ -1,9 +1,13 @@
 import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+import sys
 import tempfile
 import time
 import unittest
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
+
 from PySide6.QtWidgets import QApplication
 from model_browser import ModelBrowser
 

@@ -3,7 +3,11 @@ from PyInstaller.utils.hooks import collect_all
 from pathlib import Path
 import PySide6
 
-datas = [('image_worker.py', '.'), ('voice_worker.py', '.')]
+# SPECPATH is injected by PyInstaller: the directory containing this .spec file.
+ROOT = Path(SPECPATH).resolve().parent
+APP = ROOT / 'app'
+
+datas = [(str(APP / 'image_worker.py'), '.'), (str(APP / 'voice_worker.py'), '.')]
 binaries = []
 hiddenimports = []
 tmp_ret = collect_all('httpx')
@@ -11,8 +15,8 @@ datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 a = Analysis(
-    ['main.py'],
-    pathex=[],
+    [str(APP / 'main.py')],
+    pathex=[str(APP)],
     binaries=binaries,
     datas=datas,
     hiddenimports=hiddenimports,
@@ -51,7 +55,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['qa/keep.ico'],
+    icon=[str(ROOT / 'qa' / 'keep.ico')],
 )
 coll = COLLECT(
     exe,

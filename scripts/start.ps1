@@ -1,5 +1,6 @@
 $ErrorActionPreference = "Stop"
-Set-Location -LiteralPath $PSScriptRoot
+$root = Split-Path -Parent $PSScriptRoot
+Set-Location -LiteralPath $root
 
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
     Write-Error "Python was not found. Install Python 3.11 or newer and try again."
@@ -27,4 +28,4 @@ if (-not $runtimeReady) {
 
 Write-Host ""
 Write-Host "Opening Keep..."
-& $pythonExe main.py
+& $pythonExe app\main.py

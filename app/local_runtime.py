@@ -81,7 +81,7 @@ class LocalModelRuntime:
             raise ValueError("Local runtime port must be between 1 and 65535.")
         self.assets = assets or discover_runtime_assets()
         self.port = port
-        self.log_path = log_path or (Path(__file__).resolve().parent / "keep-runtime.log")
+        self.log_path = log_path or (Path(__file__).resolve().parent.parent / "keep-runtime.log")
         self.gpu_layers = gpu_layers
         self.process: subprocess.Popen | None = None
         self._log_file = None

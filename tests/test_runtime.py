@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
 
 from local_runtime import LocalModelRuntime, RuntimeAssets, discover_runtime_assets
 

@@ -388,7 +388,7 @@ class MainWindow(QMainWindow):
         self.speech_rate = float(self.settings.value("speech_rate", 0.0))
         self.speech = QTextToSpeech("sapi", self)
         self.speech.setRate(self.speech_rate)
-        self.voice_root = Path(str(self.settings.value("voice_runtime_root", Path(__file__).resolve().parent)))
+        self.voice_root = Path(str(self.settings.value("voice_runtime_root", Path(__file__).resolve().parent.parent)))
         self.voice_process: QProcess | None = None
         self.voice_buffer = ""
         self.voice_error = ""

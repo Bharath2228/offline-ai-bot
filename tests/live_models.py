@@ -1,6 +1,10 @@
 """Opt-in test of installed GGUF models on a dedicated loopback port."""
+import sys
 import time
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
+
 from lm_studio_client import LMStudioClient, LMStudioError, ChatMessage
 from local_runtime import LocalModelRuntime, discover_runtime_assets
 

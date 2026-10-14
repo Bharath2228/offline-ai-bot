@@ -6,7 +6,7 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
 
 from lm_studio_client import ChatMessage, LMStudioClient, LMStudioError
 from local_runtime import LocalModelRuntime, discover_runtime_assets

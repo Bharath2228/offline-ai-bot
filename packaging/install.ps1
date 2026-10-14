@@ -1,6 +1,6 @@
 param([switch]$Uninstall)
 $ErrorActionPreference = 'Stop'
-$runtimeRoot = $PSScriptRoot
+$runtimeRoot = Split-Path -Parent $PSScriptRoot
 $installDirectory = Join-Path $env:LOCALAPPDATA 'Programs\Keep'
 $desktopShortcut = Join-Path ([Environment]::GetFolderPath('Desktop')) 'Keep.lnk'
 $menuShortcut = Join-Path ([Environment]::GetFolderPath('Programs')) 'Keep.lnk'

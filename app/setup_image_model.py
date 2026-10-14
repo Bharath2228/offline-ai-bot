@@ -9,7 +9,7 @@ import httpx
 
 REPO = 'OpenVINO/stable-diffusion-v1-5-int8-ov'
 REVISION = 'cb4df51ea6b332962d8df636d6a4e0209c2f51e9'
-ROOT = Path(__file__).resolve().parent / 'image-models' / 'stable-diffusion-v1-5'
+ROOT = Path(__file__).resolve().parent.parent / 'image-models' / 'stable-diffusion-v1-5'
 ALLOWED_SUFFIXES = ('.json', '.bin', '.xml', '.txt')
 # The safety checker ships as a separate ~1.2 GB PyTorch model that this pipeline
 # never loads (it's disabled below), and .ipynb_checkpoints is editor junk.

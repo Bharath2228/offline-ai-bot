@@ -16,7 +16,7 @@ class ImageStudio(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.settings = QSettings('Keep', 'KeepDesktop')
-        self.root = Path(self.settings.value('image_runtime_root', str(Path(__file__).resolve().parent)))
+        self.root = Path(self.settings.value('image_runtime_root', str(Path(__file__).resolve().parent.parent)))
         self.process = None
         self.output = None
         self.buffer = ''

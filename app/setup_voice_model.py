@@ -2,7 +2,7 @@
 from pathlib import Path
 from huggingface_hub import snapshot_download
 
-ROOT = Path(__file__).resolve().parent / "voice-models" / "faster-whisper-tiny"
+ROOT = Path(__file__).resolve().parent.parent / "voice-models" / "faster-whisper-tiny"
 
 
 def main():

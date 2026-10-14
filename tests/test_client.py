@@ -2,10 +2,13 @@ from __future__ import annotations
 
 import base64
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 from threading import Event
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
 
 import httpx
 

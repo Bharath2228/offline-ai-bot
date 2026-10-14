@@ -2,6 +2,14 @@
 
 A polished native Windows AI application for the models already installed in LM Studio. Keep uses a calm, focus-friendly interface, connects only to the local API at `127.0.0.1:1234`, streams responses, and supports image prompts for vision-language models such as Qwen 3 VL.
 
+## Layout
+
+- `app/` — the application source (`main.py` and everything it imports).
+- `scripts/` — one-time setup scripts you run yourself (`start.ps1`, `setup-image.ps1`, `setup-voice.ps1`).
+- `packaging/` — builds and installs the desktop executable (`build.ps1`, `install.ps1`, `Keep.spec`).
+- `tests/` — the automated test suite plus opt-in live/manual checks.
+- `Keep.cmd` / `Install Keep.cmd` — double-click entry points at the project root; they just call into `scripts/` and `packaging/`.
+
 ## Start it
 
 For installation, run **Install Keep.cmd**. This installs the bundled executable for your Windows account and creates desktop and Start menu shortcuts. The chat interface includes its own Python runtime. The optional Image studio uses the separate image environment described below. Remove the application through Windows Installed apps; downloaded models are kept.
@@ -12,7 +20,7 @@ Conversations are kept in the sidebar for the current session. Search finds titl
 
 For stronger answers, Keep prefers the largest installed text model instead of a smaller vision model. The response selector offers **Balanced**, **Precise**, **Creative**, and **Coding** modes. Settings also supports personal instructions. **Regenerate** retries the latest response. Assistant messages can be read aloud using Windows' installed offline voices.
 
-Use **Speak** beside the prompt to dictate. Click it once to begin recording and click **Stop** when finished; the local multilingual Whisper model inserts the transcript into the prompt for review before anything is sent to the LLM. The microphone is never opened automatically. One-time setup: `powershell -ExecutionPolicy Bypass -File setup-voice.ps1`.
+Use **Speak** beside the prompt to dictate. Click it once to begin recording and click **Stop** when finished; the local multilingual Whisper model inserts the transcript into the prompt for review before anything is sent to the LLM. The microphone is never opened automatically. One-time setup: `powershell -ExecutionPolicy Bypass -File scripts\setup-voice.ps1`.
 
 Double-click **Keep.cmd** to run the source version. The app first connects to LM Studio's local server when it is available. If it is stopped, Keep discovers an installed GGUF model and starts LM Studio's bundled local inference engine itself. It prefers the strongest text model—currently Qwen 3 8B—while Qwen 3 VL remains available for image questions. The chosen model must be supported by your installed runtime.
 
@@ -23,7 +31,7 @@ Download a GGUF instruction/chat model using **Model library → Discover & down
 You can also start it from PowerShell:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\start.ps1
+powershell -ExecutionPolicy Bypass -File scripts\start.ps1
 ```
 
 The first run installs the desktop UI libraries into this folder's private `.venv`. It does not modify the global Python installation. Once this setup has completed, normal launches do not need internet access.
@@ -49,7 +57,7 @@ Select **＋ Image** beside the chat box, choose a JPEG, PNG, or WebP file, type
 - **Local model does not start:** Read `keep-runtime.log` in this folder for the inference engine's diagnostic output.
 - **The first answer is slow:** Qwen 3 8B may take up to a minute for the first prompt while its cache warms. Follow-up answers are substantially faster on this machine.
 - **Advanced GPU tuning:** Keep defaults to CPU inference because direct tests on this computer's 2 GB Arc GPU were 2–3× faster than partial GPU offload. On a machine with a larger dedicated GPU, set `KEEP_GPU_LAYERS` to a positive layer count before starting Keep.
-- **Voice input is unavailable:** Run `setup-voice.ps1`, keep this project folder in place, and allow microphone access in Windows privacy settings.
+- **Voice input is unavailable:** Run `scripts\setup-voice.ps1`, keep this project folder in place, and allow microphone access in Windows privacy settings.
 
 ## Model library and Image studio
 
@@ -57,7 +65,7 @@ Open **Model library → Discover & download** to search public GGUF models on H
 
 **Image studio** opens the local Stable Diffusion 1.5 image workspace, pre-converted to OpenVINO IR (int8 weights) for inference on this device's Intel GPU, falling back to CPU automatically if GPU inference fails. It is a separate diffusion model, not a chat LLM. Its model files occupy about 1 GB; OpenVINO adds a GPU kernel cache (~1.8 GB) under `unet/model_cache` the first time it runs on GPU, which speeds up later generations and can be deleted to reclaim space (it's rebuilt automatically). It creates 512×512 images with progress, cancellation, a preview and Save. Generation may take a while on CPU, faster on GPU. Outputs are saved under `generated-images` in the image runtime folder.
 
-The image runtime lives in this project's `.image-venv`, and weights in `image-models/stable-diffusion-v1-5`. The installer records this folder for the desktop app; keep it in place, or use **Choose image runtime folder** after moving it. Offline inference uses `local_files_only=True` and disables Hub access. One-time full setup: `powershell -ExecutionPolicy Bypass -File setup-image.ps1`. Stable Diffusion 1.5's [model card and license](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5) describe its limitations and usage terms (the [OpenVINO conversion](https://huggingface.co/OpenVINO/stable-diffusion-v1-5-int8-ov) carries the same license).
+The image runtime lives in this project's `.image-venv`, and weights in `image-models/stable-diffusion-v1-5`. The installer records this folder for the desktop app; keep it in place, or use **Choose image runtime folder** after moving it. Offline inference uses `local_files_only=True` and disables Hub access. One-time full setup: `powershell -ExecutionPolicy Bypass -File scripts\setup-image.ps1`. Stable Diffusion 1.5's [model card and license](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5) describe its limitations and usage terms (the [OpenVINO conversion](https://huggingface.co/OpenVINO/stable-diffusion-v1-5-int8-ov) carries the same license).
 
 ## Run the tests
 

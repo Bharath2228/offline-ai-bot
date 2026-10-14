@@ -2,6 +2,7 @@ import os
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from pathlib import Path
 import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "app"))
 import tempfile
 import time
 import unittest
